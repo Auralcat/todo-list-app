@@ -1,0 +1,6 @@
+catalog/__pycache__/*
+.cache/*
+*.pyc
+*.pyo
+*.sqlite3
+.py[cod]
