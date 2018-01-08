@@ -13,10 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from todo import views
 
-urlpatterns = patterns('',
+urlpatterns = ['',
     # Registration of new users
     url(r'^register/$', views.RegistrationView.as_view()),
 
@@ -28,4 +28,4 @@ urlpatterns = patterns('',
     url(r'^oauth2/', include('provider.oauth2.urls', namespace='oautn2')),
     url(r'^api-auth/', include('rest_framework.urls',\
         namespace='rest-framework')),
-)
+]
