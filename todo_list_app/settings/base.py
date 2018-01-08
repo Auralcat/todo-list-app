@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    #'provider',
     'oauth2_provider',
     'todo',
 ]
@@ -126,8 +125,7 @@ STATIC_URL = '/static/'
 # Rest framework configs
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':
-        ('rest_framework.authentication.OAuth2Authentication',
-         'rest_framework.authentication.SessionAuthentication'),
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     'DEFAULT_MODEL_SERIALIZER_CLASS':
         'rest_framework.serializers.ModelSerializer',
     'DEFAULT_PERMISSION_CLASSES':

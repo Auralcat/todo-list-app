@@ -25,7 +25,7 @@ urlpatterns = ['',
     url(r'todos/(?P<todo_id>[0-9]*)$', views.TodosView.as_view()),
 
     # API authentication
-    url(r'^oauth2/', include('provider.oauth2.urls', namespace='oautn2')),
+    url(r'o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^api-auth/', include('rest_framework.urls',\
         namespace='rest-framework')),
 ]
