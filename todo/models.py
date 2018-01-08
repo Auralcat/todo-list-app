@@ -9,7 +9,7 @@ class Todo(models.Model):
     done: task was completed?
     updated: when was the last time the owner wrote here?
     """
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.CharField(max_length=30)
     done = models.BooleanField()
     updated = models.DateTimeField(auto_now_add=True)
