@@ -11,9 +11,6 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
-# Provider OAuth2
-from provider.oauth2.models import Client
-
 # Todo App
 from todo.serializers import RegistrationSerializer
 from todo.serializers import UserSerializer, TodoSerializer
@@ -35,13 +32,6 @@ class RegistrationView(APIView):
         u = User.objects.create(username=data['username'])
         u.set_password(data['password'])
         u.save()
-
-        # Create OAuth2 client
-        name = u.username
-        client = Client(user=u, name=name, url='' + name,\
-                client_id=name, client_secret='', client_type=1)
-        client.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class TodosView(APIView):
     permission_classes = (IsAuthenticated,)

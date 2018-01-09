@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from todo import views
 
-urlpatterns = ['',
+urlpatterns = [
     # Registration of new users
     url(r'^register/$', views.RegistrationView.as_view()),
 
