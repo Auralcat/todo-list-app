@@ -27,7 +27,7 @@ class UserAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_data = loads(response.content)
 
-        self.assertTrue('access_token', in response_data)
+        self.assertTrue('access_token' in response_data)
         token = response_data['access_token']
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token)
 
@@ -52,4 +52,42 @@ class RegistrationTest(UserAPITestCase):
         response = self.client.get('/todos/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+class TodoTest(UserAPITestCase):
 
+    def create_todo(self):
+        data = {'description':'remember the milk'}
+        return self.client.post('/todos/', data)
+
+    def test_create_todo(self):
+        """ Create a todo. """
+
+        self.register(self.user1)
+        self.get_token(self.user1)
+        response = self.create_todo()
+
+        expected_code = status.HTTP_201_CREATED
+        self.assertEqual(response.status_code, expected_code)
+
+        response = self.client.get('/todos/')
+        expected_data = {'id':1, 'description':'remember the milk','done':False}
+
+        self.assertEqual(len(response.data), 1)
+        entry = response.data[0]
+        self.assertEqual(entry, expected_data)
+
+    def test_update_todo(self):
+        data = {'description':'remember the milk', 'done':True}
+
+        self.register(self.user1)
+        self.get_token(self.user1)
+        self.create_todo()
+
+        response = self.client.put('/todos/1', data)
+        expected_code = status.HTTP_200_OK
+
+        response = self.client.get('/todos/')
+        expected_data = {'id':1, 'description':'remember the milk','done':True}
+
+        self.assertEqual(len(response.data), 1)
+        entry = response.data[0]
+        self.assertEqual(entry, expected_data)
