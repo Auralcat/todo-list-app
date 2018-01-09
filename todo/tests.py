@@ -30,3 +30,26 @@ class UserAPITestCase(APITestCase):
         self.assertTrue('access_token', in response_data)
         token = response_data['access_token']
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token)
+
+class RegistrationTest(UserAPITestCase):
+    """Testing the registration of new users and login"""
+
+    def test_register(self):
+        """ Register a user account. """
+        response = self.register(self.user1)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_token(self):
+        """ Register, get token """
+        self.register(self.user1)
+        self.get_token(self.user1)
+
+    def test_register_login(self):
+        """ Register and login with a user account. """
+        self.register(self.user1)
+        self.get_token(self.user1)
+
+        response = self.client.get('/todos/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
